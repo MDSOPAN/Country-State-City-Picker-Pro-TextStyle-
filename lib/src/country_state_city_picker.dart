@@ -10,6 +10,10 @@ class CountryStateCityPicker extends StatefulWidget {
   final TextEditingController state;
   final TextEditingController city;
   final InputDecoration? textFieldDecoration;
+  final TextStyle? countryTextStyle;
+  final TextStyle? stateTextStyle;
+  final TextStyle? cityTextStyle;
+
   final Color? dialogColor;
 
   const CountryStateCityPicker(
@@ -18,7 +22,10 @@ class CountryStateCityPicker extends StatefulWidget {
       required this.state,
       required this.city,
       this.textFieldDecoration,
-      this.dialogColor});
+      this.dialogColor,
+      this.cityTextStyle,
+      this.countryTextStyle,
+      this.stateTextStyle});
 
   @override
   State<CountryStateCityPicker> createState() => _CountryStateCityPickerState();
@@ -101,6 +108,8 @@ class _CountryStateCityPickerState extends State<CountryStateCityPicker> {
             setState(() => _title = 'Country');
             _showDialog(context);
           },
+          style: widget.countryTextStyle == null ? TextStyle():
+          widget.countryTextStyle,
           decoration: widget.textFieldDecoration == null
               ? defaultDecoration.copyWith(hintText: 'Select country')
               : widget.textFieldDecoration
@@ -120,6 +129,8 @@ class _CountryStateCityPickerState extends State<CountryStateCityPicker> {
               _showSnackBar('Select Country');
             }
           },
+          style: widget.stateTextStyle == null ? TextStyle():
+          widget.stateTextStyle,
           decoration: widget.textFieldDecoration == null
               ? defaultDecoration.copyWith(hintText: 'Select state')
               : widget.textFieldDecoration?.copyWith(hintText: 'Select state'),
@@ -138,6 +149,8 @@ class _CountryStateCityPickerState extends State<CountryStateCityPicker> {
               _showSnackBar('Select State');
             }
           },
+          style: widget.cityTextStyle == null ? TextStyle():
+          widget.cityTextStyle,
           decoration: widget.textFieldDecoration == null
               ? defaultDecoration.copyWith(hintText: 'Select city')
               : widget.textFieldDecoration?.copyWith(hintText: 'Select city'),
