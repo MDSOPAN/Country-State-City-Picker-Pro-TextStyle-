@@ -11,8 +11,12 @@ class CountryStateCityPicker extends StatefulWidget {
   final TextEditingController city;
   final InputDecoration? textFieldDecoration;
   final TextStyle? countryTextStyle;
+  final BoxDecoration? countryBoxDecoration;
   final TextStyle? stateTextStyle;
+  final BoxDecoration? stateBoxDecoration;
   final TextStyle? cityTextStyle;
+  final BoxDecoration? cityBoxDecoration;
+
 
   final Color? dialogColor;
 
@@ -24,8 +28,12 @@ class CountryStateCityPicker extends StatefulWidget {
       this.textFieldDecoration,
       this.dialogColor,
       this.cityTextStyle,
+      this.cityBoxDecoration,
       this.countryTextStyle,
-      this.stateTextStyle});
+      this.countryBoxDecoration,
+      this.stateTextStyle,
+      this.stateBoxDecoration
+      });
 
   @override
   State<CountryStateCityPicker> createState() => _CountryStateCityPickerState();
@@ -102,7 +110,9 @@ class _CountryStateCityPickerState extends State<CountryStateCityPicker> {
     return Column(
       children: [
         ///Country TextField
-        TextField(
+        Container(
+          decoration: widget.countryBoxDecoration == null ? BoxDecoration():widget.countryBoxDecoration,
+          child: TextField(
           controller: widget.country,
           onTap: () {
             setState(() => _title = 'Country');
@@ -115,11 +125,15 @@ class _CountryStateCityPickerState extends State<CountryStateCityPicker> {
               : widget.textFieldDecoration
                   ?.copyWith(hintText: 'Select country'),
           readOnly: true,
+          ),
         ),
         const SizedBox(height: 8.0),
 
         ///State TextField
-        TextField(
+        Container(
+          decoration: widget.stateBoxDecoration == null ? BoxDecoration():widget.stateBoxDecoration, 
+          child: 
+          TextField(
           controller: widget.state,
           onTap: () {
             setState(() => _title = 'State');
@@ -135,27 +149,32 @@ class _CountryStateCityPickerState extends State<CountryStateCityPicker> {
               ? defaultDecoration.copyWith(hintText: 'Select state')
               : widget.textFieldDecoration?.copyWith(hintText: 'Select state'),
           readOnly: true,
+          ),
         ),
         const SizedBox(height: 8.0),
 
         ///City TextField
-        TextField(
-          controller: widget.city,
-          onTap: () {
-            setState(() => _title = 'City');
-            if (widget.state.text.isNotEmpty) {
-              _showDialog(context);
-            } else {
-              _showSnackBar('Select State');
-            }
-          },
-          style: widget.cityTextStyle == null ? TextStyle():
-          widget.cityTextStyle,
-          decoration: widget.textFieldDecoration == null
-              ? defaultDecoration.copyWith(hintText: 'Select city')
-              : widget.textFieldDecoration?.copyWith(hintText: 'Select city'),
-          readOnly: true,
+        Container(
+          decoration: widget.cityBoxDecoration == null ? BoxDecoration():widget.cityBoxDecoration, 
+          child: TextField(
+            controller: widget.city,
+            onTap: () {
+              setState(() => _title = 'City');
+              if (widget.state.text.isNotEmpty) {
+                _showDialog(context);
+              } else {
+                _showSnackBar('Select State');
+              }
+            },
+            style: widget.cityTextStyle == null ? TextStyle():
+            widget.cityTextStyle,
+            decoration: widget.textFieldDecoration == null
+                ? defaultDecoration.copyWith(hintText: 'Select city')
+                : widget.textFieldDecoration?.copyWith(hintText: 'Select city'),
+            readOnly: true,
+          ),
         ),
+        
       ],
     );
   }
